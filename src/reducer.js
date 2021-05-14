@@ -1,6 +1,7 @@
 export const initialState = {
   basket: [],
   subTotal: 0,
+  user: null,
 };
 
 const reducer = (state, action) => {
@@ -12,7 +13,9 @@ const reducer = (state, action) => {
         subTotal: state.subTotal + action.item.price,
       };
     case "REMOVE_FROM_BASKET":
-      const index = state.basket.findIndex((basketItem) => basketItem.id === action.item.id);
+      const index = state.basket.findIndex(
+        (basketItem) => basketItem.id === action.item.id
+      );
       let newBasket = [...state.basket];
       if (index >= 0) {
         newBasket.splice(index, 1);
@@ -23,6 +26,11 @@ const reducer = (state, action) => {
         ...state,
         basket: newBasket,
         subTotal: state.subTotal - action.item.price,
+      };
+    case "SET_USER":
+      return {
+        ...state,
+        user: action.user,
       };
     default:
       return state;
